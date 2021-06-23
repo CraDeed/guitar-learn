@@ -7,10 +7,10 @@ const { User } = require('../models/user');
 const router = express.Router();
 
 try {
-  fs.accessSync('uploads');
+  fs.accessSync('back/uploads');
 } catch (error) {
   console.log('uploads 폴더가 없으므로 생성합니다');
-  fs.mkdirSync('uploads');
+  fs.mkdirSync('back/uploads');
 }
 
 const upload = multer({

@@ -11,7 +11,7 @@ const spawn = require('child_process').spawn;
 const schedule = require('node-schedule');
 const { Post } = require('./models/post');
 
-dotenv.config();
+dotenv.config({ path: 'back/.env' });
 const { PORT, MONGO_URI } = process.env;
 
 mongoose
