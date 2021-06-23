@@ -89,7 +89,7 @@ const job = schedule.scheduleJob('0 0 * * *', async function () {
   });
 });
 
-app.get('/', (req, res) => res.send('Hello world!!!'));
+// app.get('/', (req, res) => res.send('Hello world!!!'));
 
 app.use('/user', userRouter);
 app.use('/post', postRouter);
