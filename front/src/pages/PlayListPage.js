@@ -12,6 +12,14 @@ const PostCardContainer = styled.div`
   flex-wrap: wrap;
 `;
 
+const NoContentBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+`;
+
 const PlayListPage = ({ history }) => {
   const { user } = useSelector((state) => state.userReducer);
   const { searchText } = useSelector((state) => state.postReducer);
@@ -30,12 +38,18 @@ const PlayListPage = ({ history }) => {
     <PlayListPageBlock>
       <SearchPostList />
       <PostCardContainer>
-        {user.post &&
+        {user.post ? (
           user.post
             .filter((c) => {
               return c.title.indexOf(searchText) > -1;
             })
-            .map((v) => <PostCard key={v.key} post={v} />)}
+            .map((v) => <PostCard key={v.key} post={v} />)
+        ) : (
+          <NoContentBlock>
+            <h3>플레이리스트가 없습니다!</h3>
+            <h2>배우고 싶은 노래로 채워보세요!</h2>
+          </NoContentBlock>
+        )}
       </PostCardContainer>
     </PlayListPageBlock>
   );
