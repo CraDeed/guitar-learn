@@ -10,12 +10,13 @@ const path = require('path');
 const spawn = require('child_process').spawn;
 const schedule = require('node-schedule');
 const { Post } = require('./models/post');
+const config = require('./config/key');
 
 dotenv.config({ path: 'back/.env' });
-const { PORT, MONGO_URI } = process.env;
+const { PORT } = process.env;
 
 mongoose
-  .connect(MONGO_URI, {
+  .connect(config.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -42,7 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(jwtMiddleware);
 
-const job = schedule.scheduleJob('0 0 * * *', async function () {
+const job = schedule.scheduleJob('10 * * * *', async function () {
   const randomArtist = [
     '아이유',
     '이적',
