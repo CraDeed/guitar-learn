@@ -33,7 +33,7 @@ router.post('/search', async (req, res, next) => {
 
     // 4. 에러 발생 시, stderr의 'data'이벤트리스너로 실행결과를 받는다.
     result.stderr.on('data', function (data) {
-      return res.status(500).res(data.toString());
+      return res.status(500).send(data.toString());
     });
   } catch (error) {
     console.error(error);
