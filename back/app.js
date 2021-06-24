@@ -43,7 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(jwtMiddleware);
 
-const job = schedule.scheduleJob('10 * * * *', async function () {
+const job = schedule.scheduleJob('0 0 * * *', async function () {
   const randomArtist = [
     '아이유',
     '이적',
@@ -56,7 +56,7 @@ const job = schedule.scheduleJob('10 * * * *', async function () {
 
   const artitst = randomArtist[Math.floor(Math.random() * randomArtist.length)];
 
-  const result = spawn('python', ['./python/craw.py'], artitst);
+  const result = spawn('python', ['back/python/craw.py', artitst, '']);
 
   // 3. stdout의 'data'이벤트리스너로 실행결과를 받는다.
   result.stdout.on('data', function (data) {

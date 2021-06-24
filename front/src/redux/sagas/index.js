@@ -4,7 +4,7 @@ import axios from 'axios';
 import userSaga from './user';
 import postSaga from './post';
 
-axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.baseURL = 'https://guitar-learn.herokuapp.com';
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {
