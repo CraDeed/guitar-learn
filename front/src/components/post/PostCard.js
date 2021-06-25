@@ -70,7 +70,11 @@ const PostCard = ({ post }) => {
             <img src={post.thumbnail} alt="thumbnail" />
           </div>
           <div className="card-body">
-            <h4>{post.title}</h4>
+            <h4>
+              {post.title.length < 80
+                ? post.title
+                : `${post.title.slice(0, 80)}...`}
+            </h4>
           </div>
           <div className="user">
             <img src={post.youtuberImage} alt="youtuberImage" />
