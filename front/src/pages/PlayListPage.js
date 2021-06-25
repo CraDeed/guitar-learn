@@ -34,8 +34,6 @@ const PlayListPage = ({ history }) => {
     return null;
   }
 
-  console.log(user.post);
-
   return (
     <PlayListPageBlock>
       <SearchPostList />
