@@ -34,23 +34,27 @@ const PlayListPage = ({ history }) => {
     return null;
   }
 
+  console.log(user.post);
+
   return (
     <PlayListPageBlock>
       <SearchPostList />
-      <PostCardContainer>
-        {user.post ? (
-          user.post
+      {user.post.length > 0 ? (
+        <PostCardContainer>
+          {user.post
             .filter((c) => {
               return c.title.indexOf(searchText) > -1;
             })
-            .map((v) => <PostCard key={v.key} post={v} />)
-        ) : (
-          <NoContentBlock>
-            <h3>플레이리스트가 없습니다!</h3>
-            <h2>배우고 싶은 노래로 채워보세요!</h2>
-          </NoContentBlock>
-        )}
-      </PostCardContainer>
+            .map((v) => (
+              <PostCard key={v.key} post={v} />
+            ))}
+        </PostCardContainer>
+      ) : (
+        <NoContentBlock>
+          <h3>플레이리스트가 없습니다!</h3>
+          <h2>배우고 싶은 노래로 채워보세요!</h2>
+        </NoContentBlock>
+      )}
     </PlayListPageBlock>
   );
 };

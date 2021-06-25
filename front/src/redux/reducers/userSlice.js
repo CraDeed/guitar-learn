@@ -88,7 +88,7 @@ export const userSlice = createSlice({
       state.userError = action.payload;
     },
     AddPlayListRequset: (state, action) => {
-      state.userLoading = false;
+      state.userLoading = true;
     },
     AddPlayListSuccess: (state, action) => {
       state.user.post = action.payload;
@@ -100,7 +100,7 @@ export const userSlice = createSlice({
       state.userError = action.payload;
     },
     RemovePlayListRequset: (state, action) => {
-      state.userLoading = false;
+      state.userLoading = true;
     },
     RemovePlayListSuccess: (state, action) => {
       state.user.post = state.user.post.filter(

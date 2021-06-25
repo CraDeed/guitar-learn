@@ -80,9 +80,9 @@ const PostPage = ({ location }) => {
     setIsPopoverOpen(!isPopoverOpen);
   }, [dispatch, isPopoverOpen, post.key, user._id]);
 
-  const playlistKey = user.post.find((v) => v.key === post.key);
-
   const clickMeButtonRef = useRef();
+
+  const playlistKey = user.post.find((v) => v.key === post.key);
 
   return (
     <PostPageBlock>
@@ -117,9 +117,9 @@ const PostPage = ({ location }) => {
                 // arrowClassName="popover-arrow"
               >
                 <PopoverText onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
-                  {!playlistKey
-                    ? '플레이리스트에서 삭제하였습니다'
-                    : '플레이리스트에 추가하였습니다'}
+                  {playlistKey
+                    ? '플레이리스트에서 추가하였습니다'
+                    : '플레이리스트에 삭제하였습니다'}
                 </PopoverText>
               </ArrowContainer>
             )}

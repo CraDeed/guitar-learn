@@ -21,8 +21,9 @@ def youtube_craw(artist="", song=""):
 
     url = f"https://www.youtube.com/results?search_query={parse_artist}+{parse_song}+{guitar}"
 
-
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
+    # driver = webdriver.Chrome(path, options=options)
+
     driver.get(url)
 
     driver.implicitly_wait(2)
