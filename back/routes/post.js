@@ -19,7 +19,11 @@ router.post('/search', async (req, res, next) => {
   try {
     const { artist, music } = req.query;
 
+    console.log(artist, music);
+
     const result = spawn('python', ['back/python/craw.py', artist, music]);
+
+    console.log(result);
 
     // 3. stdout의 'data'이벤트리스너로 실행결과를 받는다.
     result.stdout.on('data', function (data) {
