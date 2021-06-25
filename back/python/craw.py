@@ -11,6 +11,8 @@ def youtube_craw(artist="", song=""):
 
     options = webdriver.ChromeOptions()
     options.headless = True
+    options.add_argument('disable-gpu')
+    options.add_argument('--no-sandbox')
     options._binary_location = os.environ.get('GOOGLE_CHROME_BIN')
 
     parse_artist = parse.quote_plus(artist)
