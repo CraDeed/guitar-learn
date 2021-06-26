@@ -105,16 +105,18 @@ const ProfileImage = ({ edit }) => {
           />
           {edit &&
             (profileImage ? (
-              <>
-                <div style={{ marginTop: '10px', textAlign: 'center' }}>
-                  <ButtonBlock type="button" onClick={onUpdateProfileImage}>
-                    등록
-                  </ButtonBlock>
-                  <ButtonBlock type="button" onClick={onCancelProfileImage}>
-                    취소
-                  </ButtonBlock>
-                </div>
-              </>
+              userLoading ? null : (
+                <>
+                  <div style={{ marginTop: '10px', textAlign: 'center' }}>
+                    <ButtonBlock type="button" onClick={onUpdateProfileImage}>
+                      등록
+                    </ButtonBlock>
+                    <ButtonBlock type="button" onClick={onCancelProfileImage}>
+                      취소
+                    </ButtonBlock>
+                  </div>
+                </>
+              )
             ) : (
               <>
                 <div style={{ textAlign: 'center', marginTop: '10px' }}>
