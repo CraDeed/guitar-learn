@@ -27,6 +27,18 @@ const InfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 2px solid #f0f0f0;
+
+  @media (max-width: 800px) {
+    display: block;
+
+    h4 {
+      margin: 10px;
+    }
+
+    div {
+      margin: 0 5px;
+    }
+  }
 `;
 
 const HeartPlaylist = styled.div`
@@ -73,7 +85,7 @@ const PostPage = ({ location }) => {
 
   const onPlaylist = useCallback(async () => {
     if (!user) {
-      alert('로그인 하세요');
+      alert('로그인이 필요한 기능입니다');
       window.location.replace('/login');
       return;
     }
@@ -84,9 +96,9 @@ const PostPage = ({ location }) => {
   const onUnPlaylist = useCallback(() => {
     dispatch(RemovePlayListRequset({ userId: user._id, postKey: post.key }));
     setIsPopoverOpen(!isPopoverOpen);
-  }, [dispatch, isPopoverOpen, post.key, user._id]);
+  }, [dispatch, isPopoverOpen, post, user]);
 
-  const playlistKey = user.post.find((v) => v.key === post.key);
+  const playlistKey = user?.post?.find((v) => v.key === post.key);
 
   return (
     <PostPageBlock>
