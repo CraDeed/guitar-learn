@@ -10,6 +10,9 @@ const PostCardContainer = styled.div`
   display: flex;
   width: 100%;
   flex-wrap: wrap;
+  @media (max-width: 960px) {
+    justify-content: center;
+  }
 `;
 
 const NoContentBlock = styled.div`

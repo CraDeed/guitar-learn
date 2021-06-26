@@ -53,6 +53,21 @@ const PostCardWrapper = styled.div`
   @media (max-width: 768px) {
     width: 210px;
   }
+
+  @media (max-width: 702px) {
+    width: 280px;
+    height: 320px;
+  }
+
+  @media (max-width: 480px) {
+    width: 420px;
+    height: 370px;
+  }
+
+  @media (max-width: 320px) {
+    width: 280px;
+    height: 320px;
+  }
 `;
 
 const PostCard = ({ post }) => {

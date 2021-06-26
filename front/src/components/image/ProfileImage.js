@@ -49,7 +49,7 @@ const ButtonBlock = styled.button`
 
 const ProfileImage = ({ edit }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.userReducer);
+  const { user, userLoading } = useSelector((state) => state.userReducer);
 
   // TODO: 프로필 이미지 부분 분리하기
 
@@ -89,9 +89,11 @@ const ProfileImage = ({ edit }) => {
       }),
     );
 
-    setProfileImage('');
-    setPreviewURL('');
-  }, [dispatch, profileImage, user]);
+    if (userLoading) {
+      setProfileImage('');
+      setPreviewURL('');
+    }
+  }, [dispatch, profileImage, user.username, userLoading]);
 
   return (
     <>
@@ -99,9 +101,7 @@ const ProfileImage = ({ edit }) => {
         <div>
           <ProfileImageWrapper
             className="imageHave"
-            src={
-              profileImage ? previewURL : `http://localhost:4000/${user.image}`
-            }
+            src={profileImage ? previewURL : `${user.image}`}
           />
           {edit &&
             (profileImage ? (

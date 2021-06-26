@@ -37,6 +37,7 @@ def youtube_craw(artist="", song=""):
 
     body = driver.find_element_by_tag_name('body')
     # body태그를 선택하여 body에 넣음
+    
 
     for _ in range(4):
         body.send_keys(Keys.END)
@@ -106,6 +107,6 @@ def youtube_craw(artist="", song=""):
 
                             if (title and link and youtuber and thumbnail and key and youtuberImage):
                                 video_list.append({'title': title, "link": link, 'youtuber': youtuber, 'thumbnail' : thumbnail, 'key': key , 'youtuberImage':youtuberImage})
-    print(json.dumps(video_list))
+    print(json.dumps(video_list) )
 if __name__=='__main__':
     youtube_craw(sys.argv[1], sys.argv[2])

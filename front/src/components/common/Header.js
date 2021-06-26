@@ -182,10 +182,7 @@ const Header = () => {
             <UserInfo>{user.username}</UserInfo>
             <Menu>
               {user.image ? (
-                <UserProfileImage
-                  src={`http://localhost:4000/${user.image}`}
-                  alt="user"
-                />
+                <UserProfileImage src={`${user.image}`} alt="user" />
               ) : (
                 <UserOutlined style={{ fontSize: '20px' }} />
               )}

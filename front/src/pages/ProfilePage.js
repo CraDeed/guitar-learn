@@ -145,7 +145,7 @@ const ProfilePage = ({ history }) => {
       <ProfileImage edit={edit} />
       <ProfileInfo>
         <div className="username">
-          <span>dldmsrll1075</span>
+          <span>{user.username}</span>
           {edit ? null : <ButtonBlock onClick={onEditMode}>Edit</ButtonBlock>}
         </div>
         {edit ? (

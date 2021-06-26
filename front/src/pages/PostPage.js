@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,9 +63,15 @@ const PostPage = ({ location }) => {
   const { user } = useSelector((state) => state.userReducer);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
+  const clickMeButtonRef = useRef(false);
+
   const post = location.state;
 
-  const onPlaylist = useCallback(() => {
+  useEffect(() => {
+    return () => (clickMeButtonRef.current = true);
+  }, []);
+
+  const onPlaylist = useCallback(async () => {
     if (!user) {
       alert('로그인 하세요');
       window.location.replace('/login');
@@ -79,8 +85,6 @@ const PostPage = ({ location }) => {
     dispatch(RemovePlayListRequset({ userId: user._id, postKey: post.key }));
     setIsPopoverOpen(!isPopoverOpen);
   }, [dispatch, isPopoverOpen, post.key, user._id]);
-
-  const clickMeButtonRef = useRef();
 
   const playlistKey = user.post.find((v) => v.key === post.key);
 

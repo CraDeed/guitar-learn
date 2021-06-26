@@ -2,8 +2,13 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const dotenv = require('dotenv');
 const { User } = require('../models/user');
+
+dotenv.config({ path: 'back/.env' });
+
 const router = express.Router();
 
 try {
@@ -13,20 +18,41 @@ try {
   fs.mkdirSync('back/uploads');
 }
 
-const upload = multer({
-  //TODO: 파일 저장경로 바구기
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, 'uploads');
-    },
-    filename(req, file, done) {
-      const ext = path.extname(file.originalname); // 확장자 추출(.png)
-      const basename = path.basename(file.originalname, ext); //
-      done(null, basename + '_' + new Date().getTime() + ext);
-    },
-  }),
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
 });
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'userImage',
+    public_id: (req, file) => {
+      return `${Date.now()}_${path.basename(file.originalname)}`;
+    },
+    allowed_formats: ['jpeg', 'jpg', 'png'],
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
+
+// const upload = multer({
+//   //TODO: 파일 저장경로 바구기
+//   storage: multer.diskStorage({
+//     destination(req, file, done) {
+//       done(null, 'uploads');
+//     },
+//     filename(req, file, done) {
+//       const ext = path.extname(file.originalname); // 확장자 추출(.png)
+//       const basename = path.basename(file.originalname, ext); //
+//       done(null, basename + '_' + new Date().getTime() + ext);
+//     },
+//   }),
+//   limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+// });
 
 router.post('/image', upload.single('image'), async (req, res, next) => {
   try {
@@ -36,10 +62,10 @@ router.post('/image', upload.single('image'), async (req, res, next) => {
       username: username,
     });
 
-    user.image = req.file.filename;
+    user.image = req.file.path;
     await user.save();
 
-    res.json(req.file.filename);
+    res.json(req.file.path);
   } catch (error) {
     console.error(error);
     next(error);

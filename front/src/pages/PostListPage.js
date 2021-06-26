@@ -16,7 +16,7 @@ const PostCardContainer = styled.div`
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  @media (max-width: 768px) {
+  @media (max-width: 960px) {
     justify-content: center;
   }
 `;
@@ -45,6 +45,8 @@ const PostList = (props) => {
       dispatch(searchPostsRequest({ artist, music }));
     }
   }, [dispatch, props, props.history, props.match.path]);
+
+  //TODO: 반응형 다시 하기
 
   return (
     <PostListBlock>

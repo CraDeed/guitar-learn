@@ -19,19 +19,18 @@ router.post('/search', async (req, res, next) => {
   try {
     const { artist, music } = req.query;
 
-    console.log(artist, music);
-
     const result = spawn('python', ['back/python/craw.py', artist, music]);
 
-    console.log(result);
+    //TODO: undefined2 고치기
 
     // 3. stdout의 'data'이벤트리스너로 실행결과를 받는다.
     result.stdout.on('data', function (data) {
       const textChunk = data.toString();
-      const obj = JSON.parse(textChunk);
-
-      if (obj) {
+      try {
+        const obj = JSON.parse(textChunk);
         return res.status(200).send(obj);
+      } catch (error) {
+        return res.status(201).send({});
       }
     });
 
