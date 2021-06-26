@@ -29,7 +29,8 @@ const storage = new CloudinaryStorage({
   params: {
     folder: 'userImage',
     public_id: (req, file) => {
-      return `${Date.now()}_${path.basename(file.originalname)}`;
+      const ext = path.extname(file.originalname);
+      return `${Date.now()}_${path.basename(file.originalname, ext)}`;
     },
     allowed_formats: ['jpeg', 'jpg', 'png'],
   },

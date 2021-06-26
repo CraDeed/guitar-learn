@@ -47,6 +47,15 @@ const ButtonBlock = styled.button`
   }
 `;
 
+const ImageLoadingWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 360px;
+  height: 210px;
+  font-size: 20px;
+`;
+
 const ProfileImage = ({ edit }) => {
   const dispatch = useDispatch();
   const { user, userLoading } = useSelector((state) => state.userReducer);
@@ -89,20 +98,25 @@ const ProfileImage = ({ edit }) => {
       }),
     );
 
-    if (userLoading) {
+    if (!userLoading) {
       setProfileImage('');
       setPreviewURL('');
     }
-  }, [dispatch, profileImage, user.username, userLoading]);
+  }, [dispatch, profileImage, user, userLoading]);
 
   return (
     <>
       {user.image ? (
         <div>
-          <ProfileImageWrapper
-            className="imageHave"
-            src={profileImage ? previewURL : `${user.image}`}
-          />
+          {userLoading ? (
+            <ImageLoadingWrapper>Uploading...</ImageLoadingWrapper>
+          ) : (
+            <ProfileImageWrapper
+              className="imageHave"
+              src={profileImage ? previewURL : `${user.image}`}
+            />
+          )}
+
           {edit &&
             (profileImage ? (
               userLoading ? null : (

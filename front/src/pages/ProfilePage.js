@@ -156,6 +156,7 @@ const ProfilePage = ({ history }) => {
                 maxLength="20"
                 value={guitarSkill}
                 onChange={onGuitarSkillChange}
+                style={{ marginLeft: '10px' }}
               />
             </div>
             <div>
