@@ -54,6 +54,9 @@ def youtube_craw(artist="", song=""):
 
     video_list = []
 
+    if(not all_videos):
+        print(json.dumps[0])
+
     for video in all_videos:
         
         title_link = video.find(id='video-title')
