@@ -2,7 +2,7 @@
 유튜브를 크롤링하여 기타강좌 영상만을 보여주고 담을 수 있는 사이트
 
 ## 배포
-heroku : https://guitar-learn.herokuapp.com/
+heroku : __[Website](https://guitar-learn.herokuapp.com/)__
 
 
 ## Tech Stack
