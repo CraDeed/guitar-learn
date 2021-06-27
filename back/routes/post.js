@@ -28,9 +28,9 @@ router.post('/search', async (req, res, next) => {
       const textChunk = data.toString();
       try {
         const obj = JSON.parse(textChunk);
-        return res.status(200).send(obj);
+        res.status(200).send(obj);
       } catch (error) {
-        return res.status(201).send({});
+        res.status(201).send({});
       }
     });
 

@@ -39,7 +39,7 @@ def youtube_craw(artist="", song=""):
     # body태그를 선택하여 body에 넣음
     
 
-    for _ in range(4):
+    for _ in range(3):
         body.send_keys(Keys.END)
         # body 본문에 END키를 입력(스크롤내림)
         time.sleep(SCROLL_PAUSE_TIME)
@@ -110,6 +110,7 @@ def youtube_craw(artist="", song=""):
 
                             if (title and link and youtuber and thumbnail and key and youtuberImage):
                                 video_list.append({'title': title, "link": link, 'youtuber': youtuber, 'thumbnail' : thumbnail, 'key': key , 'youtuberImage':youtuberImage})
-    print(json.dumps(video_list) )
+
+    print(json.dumps(video_list))
 if __name__=='__main__':
     youtube_craw(sys.argv[1], sys.argv[2])
