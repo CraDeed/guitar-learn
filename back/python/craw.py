@@ -28,7 +28,7 @@ def youtube_craw(artist="", song=""):
 
     driver.get(url)
 
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(1)
 
     SCROLL_PAUSE_TIME = 0.5
     # 한번 스크롤 하고 멈출 시간 설정
@@ -39,7 +39,7 @@ def youtube_craw(artist="", song=""):
     # body태그를 선택하여 body에 넣음
     
 
-    for _ in range(3):
+    for _ in range(4):
         body.send_keys(Keys.END)
         # body 본문에 END키를 입력(스크롤내림)
         time.sleep(SCROLL_PAUSE_TIME)
