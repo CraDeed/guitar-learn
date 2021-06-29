@@ -14,18 +14,18 @@ def youtube_craw(artist="", song=""):
     options.add_argument('disable-gpu')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    # options._binary_location = os.environ.get('GOOGLE_CHROME_BIN')
+    options._binary_location = os.environ.get('GOOGLE_CHROME_BIN')
 
     parse_artist = parse.quote_plus(artist)
     parse_song = parse.quote_plus(song)
     guitar = parse.quote_plus("기타 강좌")
 
-    path = chromedriver_autoinstaller.install()
+    # path = chromedriver_autoinstaller.install()
 
     url = f"https://www.youtube.com/results?search_query={parse_artist}+{parse_song}+{guitar}"
 
-    # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
-    driver = webdriver.Chrome(executable_path=path, options=options)
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
+    # driver = webdriver.Chrome(executable_path=path, options=options)
 
     driver.get(url)
 
