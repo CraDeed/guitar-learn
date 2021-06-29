@@ -13,24 +13,25 @@ def youtube_craw(artist="", song=""):
     options.headless = True
     options.add_argument('disable-gpu')
     options.add_argument('--no-sandbox')
-    options._binary_location = os.environ.get('GOOGLE_CHROME_BIN')
+    options.add_argument('--disable-dev-shm-usage')
+    # options._binary_location = os.environ.get('GOOGLE_CHROME_BIN')
 
     parse_artist = parse.quote_plus(artist)
     parse_song = parse.quote_plus(song)
-    guitar = parse.quote_plus("기타 레슨 강좌")
+    guitar = parse.quote_plus("기타 강좌")
 
-    # path = chromedriver_autoinstaller.install()
+    path = chromedriver_autoinstaller.install()
 
     url = f"https://www.youtube.com/results?search_query={parse_artist}+{parse_song}+{guitar}"
 
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
-    # driver = webdriver.Chrome(executable_path=path, options=options)
+    # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
+    driver = webdriver.Chrome(executable_path=path, options=options)
 
     driver.get(url)
 
-    driver.implicitly_wait(1)
+    driver.implicitly_wait(2)
 
-    SCROLL_PAUSE_TIME = 0.5
+    SCROLL_PAUSE_TIME = 1
     # 한번 스크롤 하고 멈출 시간 설정
 
     from selenium.webdriver.common.keys import Keys
@@ -55,11 +56,11 @@ def youtube_craw(artist="", song=""):
     video_list = []
 
     if(not all_videos):
-        print(json.dumps[0])
+        return print(json.dumps[0])
 
     for video in all_videos:
         
-        title_link = video.find(id='video-title')
+        title_link = video.find('a',id='video-title')
         artist_link = video.find('div',id="channel-info")
         img_link = video.find('a',id="thumbnail")
 
@@ -71,8 +72,7 @@ def youtube_craw(artist="", song=""):
                     if ('커버' in lower_title) or ('cover' in lower_title) or ('lesson' in lower_title) or ('tab' in lower_title) or ('코드' in lower_title) or ('chords' in lower_title) or ('강좌' in lower_title):
                         title = title_link['title']
                         link = 'https://www.youtube.com' + title_link['href']
-                        # thumbnail = "https://i.ytimg.com/vi/" + img_link.get("href").replace("/watch?v=","") + "/mqdefault.jpg"
-                        thumbnail = img_link.find(id="img").get('src')
+                        thumbnail = img_link.find('img',id="img").get('src')
                         key = img_link.get("href").replace("/watch?v=","")
                         youtuber = artist_link.find('a',class_="yt-simple-endpoint style-scope yt-formatted-string").get_text()
                         youtuberImage = artist_link.find('img',id="img").get('src')
@@ -86,7 +86,6 @@ def youtube_craw(artist="", song=""):
                     if ('커버' in lower_title) or ('cover' in lower_title) or ('lesson' in lower_title) or ('tab' in lower_title) or ('코드' in lower_title) or ('chords' in lower_title) or ('강좌' in lower_title):
                         title = title_link['title']
                         link = 'https://www.youtube.com' + title_link['href']
-                        # thumbnail = "https://i.ytimg.com/vi/" + img_link.get("href").replace("/watch?v=","") + "/mqdefault.jpg"
                         thumbnail = img_link.find(id="img").get('src')
                         key = img_link.get("href").replace("/watch?v=","")
                         youtuber = artist_link.find('a',class_="yt-simple-endpoint style-scope yt-formatted-string").get_text()
@@ -102,7 +101,6 @@ def youtube_craw(artist="", song=""):
                         if ('커버' in lower_title) or ('cover' in lower_title) or ('lesson' in lower_title) or ('tab' in lower_title) or ('코드' in lower_title) or ('chords' in lower_title) or ('강좌' in lower_title):
                             title = title_link['title']
                             link = 'https://www.youtube.com' + title_link['href']
-                            # thumbnail = "https://i.ytimg.com/vi/" + img_link.get("href").replace("/watch?v=","") + "/mqdefault.jpg"
                             thumbnail = img_link.find(id="img").get('src')
                             key = img_link.get("href").replace("/watch?v=","")
                             youtuber = artist_link.find('a',class_="yt-simple-endpoint style-scope yt-formatted-string").get_text()

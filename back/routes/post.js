@@ -30,6 +30,7 @@ router.post('/search', async (req, res, next) => {
         const obj = JSON.parse(textChunk);
         res.status(200).send(obj);
       } catch (error) {
+        console.log(error);
         res.status(201).send({});
       }
     });
