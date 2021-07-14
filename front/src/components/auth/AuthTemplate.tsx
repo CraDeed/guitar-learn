@@ -6,6 +6,10 @@ import styled from '@emotion/styled';
     회원가입/로그인 페이지의 레이아웃을 담당하는 컴포넌트입니다.
 */
 
+interface AutnTemplateProps{
+  children: React.ReactNode
+}
+
 /* 화면 전체를 채움 */
 const AuthTemplateBlock = styled.div`
   position: absolute;
@@ -38,7 +42,7 @@ const AuthTemplateBlock = styled.div`
   }
 `;
 
-const AuthTemplate = ({ children }) => {
+const AuthTemplate = ({ children } : AutnTemplateProps) => {
   return (
     <AuthTemplateBlock>
       <div className="logo-area">

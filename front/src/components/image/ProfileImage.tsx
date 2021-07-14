@@ -5,6 +5,10 @@ import { PImageUploadRequest } from '../../redux/reducers/userSlice';
 
 import { UserOutlined } from '@ant-design/icons';
 
+interface ProfileImageProps {
+  edit: boolean;
+}
+
 const ProfileImageWrapper = styled.img`
   width: 210px;
   height: 210px;
@@ -56,7 +60,7 @@ const ImageLoadingWrapper = styled.div`
   font-size: 20px;
 `;
 
-const ProfileImage = ({ edit }) => {
+const ProfileImage = ({ edit }: ProfileImageProps) => {
   const dispatch = useDispatch();
   const { user, userLoading } = useSelector((state) => state.userReducer);
 
@@ -65,13 +69,16 @@ const ProfileImage = ({ edit }) => {
   const [previewURL, setPreviewURL] = useState('');
   const [profileImage, setProfileImage] = useState('');
 
-  const imageInput = useRef();
+  const imageInput = useRef<HTMLInputElement>();
   const onClickImageUpload = useCallback(() => {
+    if (!imageInput.current) {
+      return;
+    }
     imageInput.current.click();
   }, []);
 
   const onChangeImages = useCallback((e) => {
-    e.preventDefault();
+    // e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {

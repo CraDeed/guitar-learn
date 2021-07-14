@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { ChangeEventHandler, FormEventHandler } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 /*
     회원가입 또는 로그인 폼을 보여 줍니다.
 */
+
+interface AuthFormProps {
+  type: string;
+  onSubmit: FormEventHandler<HTMLDivElement>;
+  error: string;
+  onChangeUsername: ChangeEventHandler<HTMLInputElement>;
+  onChangePassword: ChangeEventHandler<HTMLInputElement>;
+  onChangePasswordConfirm?: ChangeEventHandler<HTMLInputElement>;
+  onChangeTerm?: ChangeEventHandler<HTMLInputElement>;
+  termError?: boolean;
+}
 
 const AuthFormBlock = styled.div`
   width: 360px;
@@ -89,12 +100,21 @@ const CheckBoxWrapper = styled.div`
   margin: 10px;
 `;
 
-const textMap = {
+const textMap: { [key: string]: string } = {
   login: '로그인',
   register: '회원가입',
 };
 
-const AuthForm = ({ type, onSubmit, error, ...props }) => {
+const AuthForm = ({
+  type,
+  onSubmit,
+  error,
+  onChangeUsername,
+  onChangePassword,
+  onChangePasswordConfirm,
+  onChangeTerm,
+  termError,
+}: AuthFormProps) => {
   const text = textMap[type];
   return (
     <AuthFormBlock onSubmit={onSubmit}>
@@ -104,28 +124,28 @@ const AuthForm = ({ type, onSubmit, error, ...props }) => {
           autoComplete="username"
           name="username"
           placeholder="아이디"
-          onChange={props.onChangeUsername}
+          onChange={onChangeUsername}
         />
         <StyledInput
           name="new-password"
           placeholder="비밀번호"
           type="password"
-          onChange={props.onChangePassword}
+          onChange={onChangePassword}
         />
         {type === 'register' && (
           <StyledInput
             name="passwordConfirm"
             placeholder="비밀번호 확인"
             type="password"
-            onChange={props.onChangePasswordConfirm}
+            onChange={onChangePasswordConfirm}
           />
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}
         {type === 'register' && (
           <CheckBoxWrapper>
-            <input type="checkbox" id="term" onChange={props.onChangeTerm} />
+            <input type="checkbox" id="term" onChange={onChangeTerm} />
             <label htmlFor="term">크라디드의 말을 잘 들을껍니까?</label>
-            {props.termError && (
+            {termError && (
               <ErrorMessage>약관에 동의하셔야 합니다.</ErrorMessage>
             )}
           </CheckBoxWrapper>

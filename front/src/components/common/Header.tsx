@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutRequest } from '../../redux/reducers/userSlice';
+import { RootState } from '../../redux/reducers';
 
 const HeaderBlock = styled.div`
   display: flex;
@@ -165,7 +166,7 @@ const Menu = styled.div`
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.userReducer);
+  const { user } = useSelector((state: RootState) => state.userReducer);
 
   const onLogout = useCallback(() => {
     dispatch(logoutRequest());
