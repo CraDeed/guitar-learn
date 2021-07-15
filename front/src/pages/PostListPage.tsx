@@ -9,6 +9,7 @@ import {
   searchPostsRequest,
 } from '../redux/reducers/postSlice';
 import LoadSearch from '../components/load/LoadSearch';
+import { RootState } from '../redux/reducers';
 
 const PostListBlock = styled.div``;
 
@@ -32,7 +33,7 @@ const NoContentBlock = styled.div`
 const PostList = (props) => {
   const dispatch = useDispatch();
   const { post, searchPostLoading, searchText } = useSelector(
-    (state) => state.postReducer,
+    (state: RootState) => state.postReducer,
   );
 
   useEffect(() => {

@@ -1,20 +1,30 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
 import AuthForm from '../components/auth/AuthForm';
 import AuthTemplate from '../components/auth/AuthTemplate';
 import useInput from '../hooks/useInput';
+import { RootState } from '../redux/reducers';
 import { signUpRequest } from '../redux/reducers/userSlice';
 
-const RegisterPage = ({ history }) => {
+const RegisterPage = ({ history }: RouteComponentProps) => {
   const dispatch = useDispatch();
-  const { user, userError } = useSelector((state) => state.userReducer);
+  const { user, userError } = useSelector(
+    (state: RootState) => state.userReducer,
+  );
 
-  const [username, onChangeUsername] = useInput('');
-  const [password, onChangePassword] = useInput('');
-  const [passwordConfirm, onChangePasswordConfirm] = useInput('');
-  const [term, setTerm] = useState('');
+  const [username, onChangeUsername] = useInput<string>('');
+  const [password, onChangePassword] = useInput<string>('');
+  const [passwordConfirm, onChangePasswordConfirm] = useInput<string>('');
+  const [term, setTerm] = useState(false);
   const [termError, setTermError] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | Error | null>(null);
 
   useEffect(() => {
     if (userError) {
@@ -27,13 +37,13 @@ const RegisterPage = ({ history }) => {
     }
   }, [history, user, userError]);
 
-  const onChangeTerm = useCallback((e) => {
+  const onChangeTerm = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setTerm(e.target.checked);
     setTermError(false);
   }, []);
 
   const onSubmit = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       // 하나라도 비어 있다면

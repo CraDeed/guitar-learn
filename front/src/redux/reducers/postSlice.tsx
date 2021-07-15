@@ -1,8 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PostType } from '../../guitarlearn-type/guitarlearn';
+import {
+  PostArray,
+  SearchPostlistType,
+} from '../../guitarlearn-type/guitarlearn';
 
 interface PostState {
-  post: PostType | null;
+  post: PostArray | null;
   postLoading: boolean;
   postError: Error | null;
   searchPostLoading: boolean;
@@ -26,7 +29,7 @@ export const postSlice = createSlice({
     loadPostsRequest: (state) => {
       state.postLoading = true;
     },
-    loadPostsSuccess: (state, action: PayloadAction<PostType>) => {
+    loadPostsSuccess: (state, action: PayloadAction<PostArray>) => {
       state.post = action.payload;
       state.postLoading = false;
       state.postError = null;
@@ -36,10 +39,10 @@ export const postSlice = createSlice({
       state.postLoading = false;
       state.postError = action.payload;
     },
-    searchPostsRequest: (state) => {
+    searchPostsRequest: (state, action: PayloadAction<SearchPostlistType>) => {
       state.searchPostLoading = true;
     },
-    searchPostsSuccess: (state, action: PayloadAction<PostType>) => {
+    searchPostsSuccess: (state, action: PayloadAction<PostArray>) => {
       state.post = action.payload;
       state.searchPostLoading = false;
       state.searchPostError = null;

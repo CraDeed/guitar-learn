@@ -1,5 +1,10 @@
-import axios from 'axios';
+import { PayloadAction } from '@reduxjs/toolkit';
+import axios, { AxiosResponse } from 'axios';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
+import {
+  PostArray,
+  SearchPostlistType,
+} from '../../guitarlearn-type/guitarlearn';
 import {
   loadPostsFailure,
   loadPostsRequest,
@@ -9,13 +14,13 @@ import {
   searchPostsSuccess,
 } from '../reducers/postSlice';
 
-function loadPostsAPI() {
+function loadPostsAPI(): Promise<AxiosResponse<PostArray>> {
   return axios.get('/post');
 }
 
 function* loadPosts() {
   try {
-    const result = yield call(loadPostsAPI);
+    const result: AxiosResponse<PostArray> = yield call(loadPostsAPI);
     yield put(loadPostsSuccess(result.data));
   } catch (error) {
     console.error(error);
@@ -23,13 +28,18 @@ function* loadPosts() {
   }
 }
 
-function searchPostsAPI(data) {
+function searchPostsAPI(
+  data: SearchPostlistType,
+): Promise<AxiosResponse<PostArray>> {
   return axios.post(`/post/search?artist=${data.artist}&music=${data.music}`);
 }
 
-function* searchPosts(action) {
+function* searchPosts(action: PayloadAction<SearchPostlistType>) {
   try {
-    const result = yield call(searchPostsAPI, action.payload);
+    const result: AxiosResponse<PostArray> = yield call(
+      searchPostsAPI,
+      action.payload,
+    );
     yield put(searchPostsSuccess(result.data));
   } catch (error) {
     console.error(error);

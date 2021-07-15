@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchInnerPost } from '../../redux/reducers/postSlice';
+import { RootState } from '../../redux/reducers';
 
 const SearchPostListBlock = styled.div`
   display: flex;
@@ -89,8 +90,8 @@ const Button = styled.button`
 
 const SearchPostList = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.userReducer);
-  const [search, onSearch] = useInput('');
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const [search, onSearch] = useInput<string>('');
 
   let TodayOrPlaylist = 'Today';
 
@@ -102,6 +103,10 @@ const SearchPostList = () => {
     },
     [dispatch, search],
   );
+
+  if (!user) {
+    return;
+  }
 
   if (window.location.href.includes('/playlist')) {
     TodayOrPlaylist = `${user.username}`;

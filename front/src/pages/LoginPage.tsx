@@ -1,23 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
 import AuthForm from '../components/auth/AuthForm';
 import AuthTemplate from '../components/auth/AuthTemplate';
 import useInput from '../hooks/useInput';
+import { RootState } from '../redux/reducers';
 import { loginRequest } from '../redux/reducers/userSlice';
 
-const LoginPage = ({ history }) => {
+const LoginPage = ({ history }: RouteComponentProps) => {
   const dispatch = useDispatch();
-  const { user, userError } = useSelector((state) => state.userReducer);
+  const { user, userError } = useSelector(
+    (state: RootState) => state.userReducer,
+  );
 
-  const [username, onChangeUsername] = useInput('');
-  const [password, onChangePassword] = useInput('');
+  const [username, onChangeUsername] = useInput<string>('');
+  const [password, onChangePassword] = useInput<string>('');
 
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | Error | null>(null);
 
   useEffect(() => {
     if (user) {
       history.push('/');
-
       try {
         localStorage.setItem('user', JSON.stringify(user));
       } catch (error) {
@@ -32,7 +35,7 @@ const LoginPage = ({ history }) => {
   }, [history, user, userError]);
 
   const onSubmit = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       // 하나라도 비어 있다면

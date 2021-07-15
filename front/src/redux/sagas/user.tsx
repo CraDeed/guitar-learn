@@ -1,5 +1,15 @@
-import axios from 'axios';
+import { PayloadAction } from '@reduxjs/toolkit';
+import axios, { AxiosResponse } from 'axios';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
+import {
+  AddPlaylistType,
+  PostArray,
+  RemovePlaylistType,
+  UpdateProfileType,
+  UserLoginSignType,
+  UserProfileType,
+  UserType,
+} from '../../guitarlearn-type/guitarlearn';
 import {
   loginRequest,
   loginFailure,
@@ -27,13 +37,16 @@ import {
   RemovePlayListFailure,
 } from '../reducers/userSlice';
 
-function logInAPI(data) {
+function logInAPI(data: UserLoginSignType): Promise<AxiosResponse<UserType>> {
   return axios.post('/user/login', data);
 }
 
-function* logIn(action) {
+function* logIn(action: PayloadAction<UserLoginSignType>) {
   try {
-    const result = yield call(logInAPI, action.payload);
+    const result: AxiosResponse<UserType> = yield call(
+      logInAPI,
+      action.payload,
+    );
     yield put(loginSuccess(result.data));
   } catch (error) {
     console.error(error);
@@ -47,7 +60,8 @@ function logOutAPI() {
 
 function* logOut() {
   try {
-    yield call(logOutAPI);
+    const d: AxiosResponse = yield call(logOutAPI);
+    console.log(d);
     yield put(logoutSuccess());
   } catch (error) {
     console.error(error);
@@ -55,14 +69,17 @@ function* logOut() {
   }
 }
 
-function loginCheckAPI(data) {
+function loginCheckAPI(data: UserType): Promise<AxiosResponse<UserType>> {
   return axios.post('/user/check', data);
 }
 
-function* loginCheck(action) {
+function* loginCheck(action: PayloadAction<UserType>) {
   if (action.payload) {
     try {
-      const result = yield call(loginCheckAPI, action.payload);
+      const result: AxiosResponse<UserType> = yield call(
+        loginCheckAPI,
+        action.payload,
+      );
       yield put(loginCheckSuccess(result.data));
     } catch (error) {
       console.error(error);
@@ -73,13 +90,16 @@ function* loginCheck(action) {
   }
 }
 
-function signUpAPI(data) {
+function signUpAPI(data: UserLoginSignType): Promise<AxiosResponse<UserType>> {
   return axios.post('/user/register', data);
 }
 
-function* signUp(action) {
+function* signUp(action: PayloadAction<UserLoginSignType>) {
   try {
-    const result = yield call(signUpAPI, action.payload);
+    const result: AxiosResponse<UserType> = yield call(
+      signUpAPI,
+      action.payload,
+    );
     yield put(signUpSuccess(result.data));
   } catch (error) {
     console.error(error);
@@ -87,13 +107,18 @@ function* signUp(action) {
   }
 }
 
-function pimageUploadAPI(data) {
+function pimageUploadAPI(
+  data: UserProfileType,
+): Promise<AxiosResponse<string>> {
   return axios.post('/user/image', data);
 }
 
-function* pimageUpload(action) {
+function* pimageUpload(action: PayloadAction<UserProfileType>) {
   try {
-    const result = yield call(pimageUploadAPI, action.payload.data);
+    const result: AxiosResponse<string> = yield call(
+      pimageUploadAPI,
+      action.payload,
+    );
     yield put(PImageUploadSuccess(result.data));
   } catch (error) {
     console.error(error);
@@ -101,13 +126,18 @@ function* pimageUpload(action) {
   }
 }
 
-function updateProfileAPI(data) {
+function updateProfileAPI(
+  data: UpdateProfileType,
+): Promise<AxiosResponse<UserType>> {
   return axios.patch('/user/update/profile', data);
 }
 
-function* updateProfile(action) {
+function* updateProfile(action: PayloadAction<UpdateProfileType>) {
   try {
-    const result = yield call(updateProfileAPI, action.payload);
+    const result: AxiosResponse<UserType> = yield call(
+      updateProfileAPI,
+      action.payload,
+    );
     yield put(UpdateProfileSuccess(result.data));
   } catch (error) {
     console.error(error);
@@ -115,13 +145,18 @@ function* updateProfile(action) {
   }
 }
 
-function addPlaylistAPI(data) {
+function addPlaylistAPI(
+  data: AddPlaylistType,
+): Promise<AxiosResponse<PostArray>> {
   return axios.post(`/user/playlist/${data.post.key}`, data);
 }
 
-function* addPlaylist(action) {
+function* addPlaylist(action: PayloadAction<AddPlaylistType>) {
   try {
-    const result = yield call(addPlaylistAPI, action.payload);
+    const result: AxiosResponse<PostArray> = yield call(
+      addPlaylistAPI,
+      action.payload,
+    );
     yield put(AddPlayListSuccess(result.data));
   } catch (error) {
     console.error(error);
@@ -129,13 +164,18 @@ function* addPlaylist(action) {
   }
 }
 
-function removePlaylistAPI(data) {
+function removePlaylistAPI(
+  data: RemovePlaylistType,
+): Promise<AxiosResponse<{ postKey: string }>> {
   return axios.delete(`/user/unplaylist/${data.postKey}`, { data: data });
 }
 
-function* removePlaylist(action) {
+function* removePlaylist(action: PayloadAction<RemovePlaylistType>) {
   try {
-    const result = yield call(removePlaylistAPI, action.payload);
+    const result: AxiosResponse<{ postKey: string }> = yield call(
+      removePlaylistAPI,
+      action.payload,
+    );
     yield put(RemovePlayListSuccess(result.data));
   } catch (error) {
     console.error(error);

@@ -8,6 +8,7 @@ import {
   AddPlayListRequset,
   RemovePlayListRequset,
 } from '../redux/reducers/userSlice';
+import { RootState } from '../redux/reducers';
 
 const PostPageBlock = styled.div``;
 
@@ -72,7 +73,7 @@ const PopoverText = styled.div`
 
 const PostPage = ({ location }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.userReducer);
+  const { user } = useSelector((state: RootState) => state.userReducer);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const clickMeButtonRef = useRef(false);
@@ -94,6 +95,9 @@ const PostPage = ({ location }) => {
   }, [dispatch, isPopoverOpen, post, user]);
 
   const onUnPlaylist = useCallback(() => {
+    if (!user) {
+      return;
+    }
     dispatch(RemovePlayListRequset({ userId: user._id, postKey: post.key }));
     setIsPopoverOpen(!isPopoverOpen);
   }, [dispatch, isPopoverOpen, post, user]);

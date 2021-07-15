@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 
 interface AuthFormProps {
   type: string;
-  onSubmit: FormEventHandler<HTMLDivElement>;
-  error: string;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  error: string | Error | null;
   onChangeUsername: ChangeEventHandler<HTMLInputElement>;
   onChangePassword: ChangeEventHandler<HTMLInputElement>;
   onChangePasswordConfirm?: ChangeEventHandler<HTMLInputElement>;
@@ -117,9 +117,9 @@ const AuthForm = ({
 }: AuthFormProps) => {
   const text = textMap[type];
   return (
-    <AuthFormBlock onSubmit={onSubmit}>
+    <AuthFormBlock>
       <h3>{text}</h3>
-      <form>
+      <form onSubmit={onSubmit}>
         <StyledInput
           autoComplete="username"
           name="username"

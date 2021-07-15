@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PostArray, UserType } from '../../guitarlearn-type/guitarlearn';
+import {
+  AddPlaylistType,
+  PostArray,
+  RemovePlaylistType,
+  UserLoginSignType,
+  UserProfileType,
+  UserType,
+} from '../../guitarlearn-type/guitarlearn';
 
 interface UserState {
   user: UserType | null;
@@ -17,7 +24,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginRequest: (state) => {
+    loginRequest: (state, action: PayloadAction<UserLoginSignType>) => {
       state.userLoading = true;
     },
     loginSuccess: (state, action: PayloadAction<UserType>) => {
@@ -43,7 +50,7 @@ export const userSlice = createSlice({
       state.userLoading = false;
       state.userError = action.payload;
     },
-    loginCheckRequest: (state) => {
+    loginCheckRequest: (state, action: PayloadAction<UserType>) => {
       state.userLoading = true;
     },
     loginCheckSuccess: (state, action: PayloadAction<UserType>) => {
@@ -59,7 +66,7 @@ export const userSlice = createSlice({
     tempSetUser: (state, action: PayloadAction<UserType>) => {
       state.user = action.payload;
     },
-    signUpRequest: (state) => {
+    signUpRequest: (state, action: PayloadAction<UserLoginSignType>) => {
       state.userLoading = true;
     },
     signUpSuccess: (state, action: PayloadAction<UserType>) => {
@@ -72,7 +79,7 @@ export const userSlice = createSlice({
       state.userLoading = false;
       state.userError = action.payload;
     },
-    PImageUploadRequest: (state) => {
+    PImageUploadRequest: (state, action: PayloadAction<UserProfileType>) => {
       state.userLoading = true;
     },
     PImageUploadSuccess: (state, action: PayloadAction<string>) => {
@@ -99,7 +106,7 @@ export const userSlice = createSlice({
       state.userLoading = false;
       state.userError = action.payload;
     },
-    AddPlayListRequset: (state) => {
+    AddPlayListRequset: (state, action: PayloadAction<AddPlaylistType>) => {
       state.userLoading = true;
     },
     AddPlayListSuccess: (state, action: PayloadAction<PostArray>) => {
@@ -114,7 +121,10 @@ export const userSlice = createSlice({
       state.userLoading = false;
       state.userError = action.payload;
     },
-    RemovePlayListRequset: (state) => {
+    RemovePlayListRequset: (
+      state,
+      action: PayloadAction<RemovePlaylistType>,
+    ) => {
       state.userLoading = true;
     },
     RemovePlayListSuccess: (
