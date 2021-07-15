@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PImageUploadRequest } from '../../redux/reducers/userSlice';
 
 import { UserOutlined } from '@ant-design/icons';
+import { RootState } from '../../redux/reducers';
 
 interface ProfileImageProps {
   edit: boolean;
@@ -62,14 +63,16 @@ const ImageLoadingWrapper = styled.div`
 
 const ProfileImage = ({ edit }: ProfileImageProps) => {
   const dispatch = useDispatch();
-  const { user, userLoading } = useSelector((state) => state.userReducer);
+  const { user, userLoading } = useSelector(
+    (state: RootState) => state.userReducer,
+  );
 
   // TODO: 프로필 이미지 부분 분리하기
 
-  const [previewURL, setPreviewURL] = useState('');
-  const [profileImage, setProfileImage] = useState('');
+  const [previewURL, setPreviewURL] = useState<string>('');
+  const [profileImage, setProfileImage] = useState<File | null>(null);
 
-  const imageInput = useRef<HTMLInputElement>();
+  const imageInput = useRef<HTMLInputElement>(null);
   const onClickImageUpload = useCallback(() => {
     if (!imageInput.current) {
       return;
@@ -77,25 +80,34 @@ const ProfileImage = ({ edit }: ProfileImageProps) => {
     imageInput.current.click();
   }, []);
 
-  const onChangeImages = useCallback((e) => {
-    // e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      setProfileImage(file);
-      setPreviewURL(reader.result);
-    };
-    reader.readAsDataURL(file);
-  }, []);
+  const onChangeImages = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!e.target.files) {
+        return;
+      }
+      let reader = new FileReader();
+      let file = e.target.files[0];
+      reader.onloadend = () => {
+        setProfileImage(file);
+        setPreviewURL(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    },
+    [],
+  );
 
   const onCancelProfileImage = useCallback(() => {
-    setProfileImage('');
+    setProfileImage(null);
     setPreviewURL('');
   }, []);
 
   const onUpdateProfileImage = useCallback(() => {
+    if (!user) {
+      return;
+    }
+
     const imageFormData = new FormData();
-    imageFormData.append('image', profileImage);
+    imageFormData.append('image', profileImage as Blob);
     imageFormData.append('username', user.username);
 
     dispatch(
@@ -106,10 +118,14 @@ const ProfileImage = ({ edit }: ProfileImageProps) => {
     );
 
     if (!userLoading) {
-      setProfileImage('');
+      setProfileImage(null);
       setPreviewURL('');
     }
   }, [dispatch, profileImage, user, userLoading]);
+
+  if (!user) {
+    return;
+  }
 
   return (
     <>
