@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "strict": false,
+    "moduleResolution": "Node",
+    "allowJs": true,
+    "noImplicitAny": true
+  },
+  "include": ["back/**/*"]
+}

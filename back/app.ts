@@ -1,4 +1,6 @@
-const express = require('express');
+// const express = require('express');
+import * as express from 'express';
+import { Post } from './models/post';
 const dotenv = require('dotenv');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -9,7 +11,6 @@ const postRouter = require('./routes/post');
 const path = require('path');
 const spawn = require('child_process').spawn;
 const schedule = require('node-schedule');
-const { Post } = require('./models/post');
 const config = require('./config/key');
 
 dotenv.config({ path: 'back/.env' });
@@ -25,7 +26,7 @@ mongoose
   .then(() => {
     console.log('Connected to MongoDB');
   })
-  .catch((e) => {
+  .catch((e: Error) => {
     console.error(e);
   });
 
@@ -59,13 +60,13 @@ const job = schedule.scheduleJob('0 0 * * *', async function () {
   const result = spawn('python', ['back/python/craw.py', artitst, '']);
 
   // 3. stdout의 'data'이벤트리스너로 실행결과를 받는다.
-  result.stdout.on('data', function (data) {
+  result.stdout.on('data', function (data: Buffer) {
     const textChunk = data.toString();
     const obj = JSON.parse(textChunk);
 
     try {
       if (obj) {
-        obj.forEach(async (craw) => {
+        obj.forEach(async (craw: any) => {
           await Post.remove({});
           const post = new Post({
             title: craw.title,
@@ -85,7 +86,7 @@ const job = schedule.scheduleJob('0 0 * * *', async function () {
   });
 
   // 4. 에러 발생 시, stderr의 'data'이벤트리스너로 실행결과를 받는다.
-  result.stderr.on('data', function (data) {
+  result.stderr.on('data', function (data: Buffer) {
     console.log(data.toString());
   });
 });
@@ -106,5 +107,5 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const port = PORT || 4000;
+const port: number = Number(PORT) || 4000;
 app.listen(port, () => console.log(`listening on port ${port}`));
