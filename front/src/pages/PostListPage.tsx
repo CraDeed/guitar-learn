@@ -10,6 +10,7 @@ import {
 } from '../redux/reducers/postSlice';
 import LoadSearch from '../components/load/LoadSearch';
 import { RootState } from '../redux/reducers';
+import { RouteComponentProps } from 'react-router-dom';
 
 const PostListBlock = styled.div``;
 
@@ -30,28 +31,28 @@ const NoContentBlock = styled.div`
   height: 50vh;
 `;
 
-const PostList = (props) => {
+const PostList = ({ history, match, location }: RouteComponentProps) => {
   const dispatch = useDispatch();
   const { post, searchPostLoading, searchText } = useSelector(
     (state: RootState) => state.postReducer,
   );
 
   useEffect(() => {
-    if (props.match.path === '/') {
-      return dispatch(loadPostsRequest());
+    if (match.path === '/') {
+      dispatch(loadPostsRequest());
     }
-    if (props.location.pathname === '/search') {
-      const artist = props.location.search.split('=')[1].split('&')[0];
-      const music = props.location.search.split('=')[2];
+    if (location.pathname === '/search') {
+      const artist = location.search.split('=')[1].split('&')[0];
+      const music = location.search.split('=')[2];
       dispatch(searchPostsRequest({ artist, music }));
     }
-  }, [dispatch, props, props.history, props.match.path]);
+  }, [dispatch, location.pathname, location.search, match.path]);
 
   //TODO: 반응형 다시 하기
 
   return (
     <PostListBlock>
-      <SearchMusic props={props} />
+      <SearchMusic history={history} />
       <SearchPostList />
       {searchPostLoading ? (
         <LoadSearch />

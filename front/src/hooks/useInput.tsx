@@ -1,15 +1,16 @@
+import React from 'react';
 import { useCallback, useState } from 'react';
 
 const useInput = <T extends number | string>(
   initialValue: T,
 ): [
   T,
-  React.ChangeEventHandler<HTMLInputElement>,
+  React.ChangeEventHandler<any>,
   React.Dispatch<React.SetStateAction<T>>,
 ] => {
   const [value, setValue] = useState<T>(initialValue);
 
-  const handler = useCallback((e) => {
+  const handler = useCallback((e: any) => {
     setValue(e.target.value);
   }, []);
 

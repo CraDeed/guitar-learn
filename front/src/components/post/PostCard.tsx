@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import { PostType } from '../../guitarlearn-type/guitarlearn';
+
+export interface PostCardProps {
+  post: PostType;
+}
 
 const PostCardContainer = styled.div`
   margin: 2px;
@@ -70,7 +75,7 @@ const PostCardWrapper = styled.div`
   }
 `;
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post }: PostCardProps) => {
   return (
     <PostCardContainer>
       <Link

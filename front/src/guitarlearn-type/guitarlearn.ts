@@ -10,7 +10,7 @@ export interface PostType {
   youtuberImage: string;
 }
 
-export type PostArray = PostType[];
+export type PostArray = PostType[] | [];
 
 export interface UserType {
   _id: string;
@@ -18,7 +18,7 @@ export interface UserType {
   image?: string;
   guitarSkill?: string;
   introduction?: string;
-  post?: PostType[];
+  post: [] | PostType[];
 }
 
 // API 전달 타입
@@ -29,7 +29,6 @@ export interface UserLoginSignType {
 }
 
 export interface UserProfileType {
-  username: string;
   data: FormData;
 }
 

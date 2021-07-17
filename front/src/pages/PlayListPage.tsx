@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 import SearchPostList from '../components/Search/SearchPostList';
 import PostCard from '../components/post/PostCard';
+import { RouteComponentProps } from 'react-router-dom';
+import { RootState } from '../redux/reducers';
 
 const PlayListPageBlock = styled.div``;
 
@@ -23,9 +25,9 @@ const NoContentBlock = styled.div`
   height: 50vh;
 `;
 
-const PlayListPage = ({ history }) => {
-  const { user } = useSelector((state) => state.userReducer);
-  const { searchText } = useSelector((state) => state.postReducer);
+const PlayListPage = ({ history }: RouteComponentProps) => {
+  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { searchText } = useSelector((state: RootState) => state.postReducer);
 
   useEffect(() => {
     if (!user) {

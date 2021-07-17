@@ -251,4 +251,9 @@ router.delete('/unplaylist/:postKey', async (req, res, next) => {
   }
 });
 
+router.get('/postget', (req, res, next) => {
+  try {
+  } catch (error) {}
+});
+
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import styled from '@emotion/styled';
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
@@ -93,10 +93,10 @@ const SearchPostList = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
   const [search, onSearch] = useInput<string>('');
 
-  let TodayOrPlaylist = 'Today';
+  let TodayOrPlaylist: string = 'Today';
 
   const onSubmit = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       dispatch(searchInnerPost(search));
@@ -104,11 +104,7 @@ const SearchPostList = () => {
     [dispatch, search],
   );
 
-  if (!user) {
-    return;
-  }
-
-  if (window.location.href.includes('/playlist')) {
+  if (window.location.href.includes('/playlist') && user) {
     TodayOrPlaylist = `${user.username}`;
   }
 

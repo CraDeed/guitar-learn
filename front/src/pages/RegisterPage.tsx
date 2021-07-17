@@ -34,6 +34,11 @@ const RegisterPage = ({ history }: RouteComponentProps) => {
 
     if (user) {
       history.push('/');
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (error) {
+        console.error(error);
+      }
     }
   }, [history, user, userError]);
 

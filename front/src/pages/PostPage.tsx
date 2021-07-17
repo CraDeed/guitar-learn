@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,11 @@ import {
   RemovePlayListRequset,
 } from '../redux/reducers/userSlice';
 import { RootState } from '../redux/reducers';
+import { RouteComponentProps } from 'react-router-dom';
+import { StaticContext } from 'react-router';
+import { PostType } from '../guitarlearn-type/guitarlearn';
+
+interface PostPageProps extends PostType {}
 
 const PostPageBlock = styled.div``;
 
@@ -71,18 +76,20 @@ const PopoverText = styled.div`
   padding: 8px;
 `;
 
-const PostPage = ({ location }) => {
+const PostPage = ({
+  location,
+}: RouteComponentProps<{}, StaticContext, PostPageProps>) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.userReducer);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
-  const clickMeButtonRef = useRef(false);
+  const clickMeButtonRef = useRef<HTMLElement>(null);
 
   const post = location.state;
 
-  useEffect(() => {
-    return () => (clickMeButtonRef.current = true);
-  }, []);
+  // useEffect(() => {
+  //   () => (clickMeButtonRef.current = true);
+  // }, []);
 
   const onPlaylist = useCallback(async () => {
     if (!user) {

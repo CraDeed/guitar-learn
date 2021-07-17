@@ -3,6 +3,7 @@ import {
   AddPlaylistType,
   PostArray,
   RemovePlaylistType,
+  UpdateProfileType,
   UserLoginSignType,
   UserProfileType,
   UserType,
@@ -94,7 +95,7 @@ export const userSlice = createSlice({
       state.userLoading = false;
       state.userError = action.payload;
     },
-    UpdateProfileRequest: (state) => {
+    UpdateProfileRequest: (state, action: PayloadAction<UpdateProfileType>) => {
       state.userLoading = true;
     },
     UpdateProfileSuccess: (state, action: PayloadAction<UserType>) => {

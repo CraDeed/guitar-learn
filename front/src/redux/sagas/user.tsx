@@ -107,17 +107,17 @@ function* signUp(action: PayloadAction<UserLoginSignType>) {
   }
 }
 
-function pimageUploadAPI(
-  data: UserProfileType,
-): Promise<AxiosResponse<string>> {
+function pimageUploadAPI(data: FormData): Promise<AxiosResponse<string>> {
   return axios.post('/user/image', data);
 }
 
 function* pimageUpload(action: PayloadAction<UserProfileType>) {
   try {
+    console.log(action.payload);
+
     const result: AxiosResponse<string> = yield call(
       pimageUploadAPI,
-      action.payload,
+      action.payload.data,
     );
     yield put(PImageUploadSuccess(result.data));
   } catch (error) {

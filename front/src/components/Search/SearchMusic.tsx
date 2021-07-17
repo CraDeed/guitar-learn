@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
 import styled from '@emotion/styled';
 import { SearchOutlined } from '@ant-design/icons';
 import useInput from '../../hooks/useInput';
 import { useDispatch } from 'react-redux';
 import { searchPostsRequest } from '../../redux/reducers/postSlice';
+import { History } from 'history';
 
 const SearchMusicBlock = styled.div`
   text-align: center;
@@ -64,17 +65,35 @@ const SearchButton = styled.button`
   color: #1cbdea;
 `;
 
-const SearchMusic = ({ props }) => {
+// TODO: 공통 스타일 모듈화
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+`;
+
+interface SearchMusicProps {
+  history: History;
+}
+
+const SearchMusic = ({ history }: SearchMusicProps) => {
   const dispatch = useDispatch();
 
-  const [artist, onChangeArtist] = useInput('');
-  const [music, onChangeMusic] = useInput('');
+  const [artist, onChangeArtist] = useInput<string>('');
+  const [music, onChangeMusic] = useInput<string>('');
+  const [empty, setEmpty] = useState(false);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (artist.length === 0 && music.length === 0) {
+      setEmpty(true);
+      return;
+    }
+
     dispatch(searchPostsRequest({ artist, music }));
-    props.history.push(`/search?artist=${artist}&music=${music}`);
+    history.push(`/search?artist=${artist}&music=${music}`);
   };
 
   return (
@@ -91,6 +110,9 @@ const SearchMusic = ({ props }) => {
           <SearchOutlined />
         </SearchButton>
       </form>
+      {empty && (
+        <ErrorMessage>가수와 노래 중 하나를 입력해주세요.</ErrorMessage>
+      )}
     </SearchMusicBlock>
   );
 };

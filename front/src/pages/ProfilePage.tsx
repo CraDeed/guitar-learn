@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UpdateProfileRequest } from '../redux/reducers/userSlice';
 import useInput from '../hooks/useInput';
 import ProfileImage from '../components/image/ProfileImage';
+import { RootState } from '../redux/reducers';
+import { RouteComponentProps } from 'react-router-dom';
 
 const ProfilePageBlock = styled.div`
   display: flex;
@@ -86,15 +88,16 @@ const StyledIextArea = styled.textarea`
   }
 `;
 
-const ProfilePage = ({ history }) => {
+const ProfilePage = ({ history }: RouteComponentProps) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.userReducer);
+  const { user } = useSelector((state: RootState) => state.userReducer);
   // Edit Mode 수정 부분
 
   const [edit, setEdit] = useState(false);
   const [introText, onIntroTextChange, setIntoText] =
-    useInput('자기소개서를 입력해주세요!');
-  const [guitarSkill, onGuitarSkillChange, setGuitarSkill] = useInput('???');
+    useInput<string>('자기소개서를 입력해주세요!');
+  const [guitarSkill, onGuitarSkillChange, setGuitarSkill] =
+    useInput<string>('???');
 
   useEffect(() => {
     if (!user) {
@@ -124,6 +127,9 @@ const ProfilePage = ({ history }) => {
   }, [setGuitarSkill, setIntoText, user]);
 
   const onEditProfile = useCallback(() => {
+    if (!user) {
+      return;
+    }
     setEdit(false);
     dispatch(
       UpdateProfileRequest({
@@ -153,7 +159,7 @@ const ProfilePage = ({ history }) => {
             <div style={{ marginBottom: '10px' }}>
               기타실력 :
               <StyledIunput
-                maxLength="20"
+                maxLength={20}
                 value={guitarSkill}
                 onChange={onGuitarSkillChange}
                 style={{ marginLeft: '10px' }}

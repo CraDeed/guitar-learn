@@ -8,24 +8,23 @@ from urllib import parse
 import chromedriver_autoinstaller
 
 def youtube_craw(artist="", song=""):
-
     options = webdriver.ChromeOptions()
     options.headless = True
     options.add_argument('disable-gpu')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    options._binary_location = os.environ.get('GOOGLE_CHROME_BIN')
+    # options._binary_location = os.environ.get('GOOGLE_CHROME_BIN')
 
     parse_artist = parse.quote_plus(artist)
     parse_song = parse.quote_plus(song)
     guitar = parse.quote_plus("기타 강좌")
 
-    # path = chromedriver_autoinstaller.install()
+    path = chromedriver_autoinstaller.install()
 
     url = f"https://www.youtube.com/results?search_query={parse_artist}+{parse_song}+{guitar}"
 
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
-    # driver = webdriver.Chrome(executable_path=path, options=options)
+    # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
+    driver = webdriver.Chrome(executable_path=path, options=options)
 
     driver.get(url)
 
@@ -56,7 +55,7 @@ def youtube_craw(artist="", song=""):
     video_list = []
 
     if(not all_videos):
-        return print(json.dumps[0])
+        return print(json.dumps([]), end='')
 
     for video in all_videos:
         
@@ -109,6 +108,6 @@ def youtube_craw(artist="", song=""):
                             if (title and link and youtuber and thumbnail and key and youtuberImage):
                                 video_list.append({'title': title, "link": link, 'youtuber': youtuber, 'thumbnail' : thumbnail, 'key': key , 'youtuberImage':youtuberImage})
 
-    print(json.dumps(video_list))
+    print(json.dumps(video_list), end='')
 if __name__=='__main__':
     youtube_craw(sys.argv[1], sys.argv[2])

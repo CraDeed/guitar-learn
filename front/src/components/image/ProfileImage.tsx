@@ -108,11 +108,11 @@ const ProfileImage = ({ edit }: ProfileImageProps) => {
 
     const imageFormData = new FormData();
     imageFormData.append('image', profileImage as Blob);
+    // back end req.body로 username 받기
     imageFormData.append('username', user.username);
 
     dispatch(
       PImageUploadRequest({
-        username: user.username,
         data: imageFormData,
       }),
     );
@@ -123,16 +123,12 @@ const ProfileImage = ({ edit }: ProfileImageProps) => {
     }
   }, [dispatch, profileImage, user, userLoading]);
 
-  if (!user) {
-    return;
-  }
-
   return (
     <>
-      {user.image ? (
+      {user && user.image ? (
         <div>
           {userLoading ? (
-            <ImageLoadingWrapper>Uploading...</ImageLoadingWrapper>
+            <ImageLoadingWrapper>Loading...</ImageLoadingWrapper>
           ) : (
             <ProfileImageWrapper
               className="imageHave"
