@@ -1,23 +1,23 @@
 // const express = require('express');
 import * as express from 'express';
-import { Post } from './models/post';
-const dotenv = require('dotenv');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
-const jwtMiddleware = require('./lib/jwtMiddleware');
-const userRouter = require('./routes/user');
-const postRouter = require('./routes/post');
-const path = require('path');
-const spawn = require('child_process').spawn;
-const schedule = require('node-schedule');
-const config = require('./config/key');
+import { Post, PostType } from './models/post';
+import * as dotenv from 'dotenv';
+import * as mongoose from 'mongoose';
+import * as cors from 'cors';
+import * as cookieParser from 'cookie-parser';
+import * as path from 'path';
+import { spawn } from 'child_process';
+import { scheduleJob } from 'node-schedule';
+import mongoURI from './config/key';
+import jwtMiddleware from './lib/jwtMiddleware';
+import userRouter from './routes/user';
+import postRouter from './routes/post';
 
 dotenv.config({ path: 'back/.env' });
 const { PORT } = process.env;
 
 mongoose
-  .connect(config.mongoURI, {
+  .connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(jwtMiddleware);
 
-const job = schedule.scheduleJob('0 0 * * *', async function () {
+const job = scheduleJob('0 0 * * *', async function () {
   const randomArtist = [
     '아이유',
     '이적',
@@ -62,11 +62,11 @@ const job = schedule.scheduleJob('0 0 * * *', async function () {
   // 3. stdout의 'data'이벤트리스너로 실행결과를 받는다.
   result.stdout.on('data', function (data: Buffer) {
     const textChunk = data.toString();
-    const obj = JSON.parse(textChunk);
+    const obj: PostType[] = JSON.parse(textChunk);
 
     try {
       if (obj) {
-        obj.forEach(async (craw: any) => {
+        obj.forEach(async (craw: PostType) => {
           await Post.remove({});
           const post = new Post({
             title: craw.title,

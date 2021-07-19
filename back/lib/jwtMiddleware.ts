@@ -1,14 +1,19 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+import { NextFunction, Request, Response } from 'express';
+import { JwtPayload, verify } from 'jsonwebtoken';
+import { User } from '../models/user';
 
-const jwtMiddleware = async (req, res, next) => {
-  const token = req.cookies.access_token;
+const jwtMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const token = req.cookies.access_token as string;
   if (!token) return next(); // 토큰 없음
   try {
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    const decode = verify(token, process.env.JWT_SECRET) as JwtPayload;
     res.locals.user = {
-      _id: decode._id,
-      username: decode.username,
+      _id: decode._id as string,
+      username: decode.username as string,
     };
 
     // 토큰의 남은 유효 기간이 3.5일 미만이면 재발급
@@ -28,4 +33,4 @@ const jwtMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = jwtMiddleware;
+export default jwtMiddleware;
