@@ -9,7 +9,7 @@
     "npm": "6.14.11"
   },
   "scripts": {
-    "start": "node back/app.js",
+    "start": "ts-node back/app.ts",
     "dev": "nodemon back/app.js",
     "ts": "nodemon --exec ts-node back/app.ts",
     "heroku-postbuild": "npm install --prefix front && npm run build --prefix front"

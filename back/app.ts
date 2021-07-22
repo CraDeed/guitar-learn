@@ -1,11 +1,11 @@
 // const express = require('express');
-import * as express from 'express';
+import express from 'express';
 import { Post, PostType } from './models/post';
-import * as dotenv from 'dotenv';
-import * as mongoose from 'mongoose';
-import * as cors from 'cors';
-import * as cookieParser from 'cookie-parser';
-import * as path from 'path';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import path from 'path';
 import { spawn } from 'child_process';
 import { scheduleJob } from 'node-schedule';
 import mongoURI from './config/key';

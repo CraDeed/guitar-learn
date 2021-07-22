@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { Request, Response, NextFunction } from 'express';
 import { spawn } from 'child_process';
 

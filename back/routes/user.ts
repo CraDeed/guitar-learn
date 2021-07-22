@@ -1,10 +1,10 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import * as multer from 'multer';
-import * as path from 'path';
-import * as fs from 'fs';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import { User } from '../models/user';
 
 interface UserDef {

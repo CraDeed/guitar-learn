@@ -6,7 +6,8 @@
     "strict": false,
     "moduleResolution": "Node",
     "allowJs": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "esModuleInterop": true
   },
   "include": ["back/**/*"]
 }
