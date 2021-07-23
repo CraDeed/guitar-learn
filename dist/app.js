@@ -49,14 +49,14 @@ var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var path_1 = __importDefault(require("path"));
 var child_process_1 = require("child_process");
 var node_schedule_1 = require("node-schedule");
-var key_1 = __importDefault(require("./config/key"));
+var mongoURI = require('./config/key');
 var jwtMiddleware_1 = __importDefault(require("./lib/jwtMiddleware"));
 var user_1 = __importDefault(require("./routes/user"));
 var post_2 = __importDefault(require("./routes/post"));
 dotenv_1.default.config({ path: 'back/.env' });
 var PORT = process.env.PORT;
 mongoose_1.default
-    .connect(key_1.default, {
+    .connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,

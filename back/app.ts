@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import { spawn } from 'child_process';
 import { scheduleJob } from 'node-schedule';
-import mongoURI from './config/key';
+const mongoURI: string = require('./config/key');
 import jwtMiddleware from './lib/jwtMiddleware';
 import userRouter from './routes/user';
 import postRouter from './routes/post';
