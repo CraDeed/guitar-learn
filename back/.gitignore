@@ -1,6 +1,5 @@
-/node_modules
 /uploads
-/config/dev.js
+/config/dev.ts
 
 .env
 
