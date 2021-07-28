@@ -80,8 +80,8 @@ interface SearchMusicProps {
 const SearchMusic = ({ history }: SearchMusicProps) => {
   const dispatch = useDispatch();
 
-  const [artist, onChangeArtist] = useInput<string>('');
-  const [music, onChangeMusic] = useInput<string>('');
+  const [artist, onChangeArtist] = useInput('');
+  const [music, onChangeMusic] = useInput('');
   const [empty, setEmpty] = useState(false);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {

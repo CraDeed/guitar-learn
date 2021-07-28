@@ -95,9 +95,8 @@ const ProfilePage = ({ history }: RouteComponentProps) => {
 
   const [edit, setEdit] = useState(false);
   const [introText, onIntroTextChange, setIntoText] =
-    useInput<string>('자기소개서를 입력해주세요!');
-  const [guitarSkill, onGuitarSkillChange, setGuitarSkill] =
-    useInput<string>('???');
+    useInput('자기소개서를 입력해주세요!');
+  const [guitarSkill, onGuitarSkillChange, setGuitarSkill] = useInput('???');
 
   useEffect(() => {
     if (!user) {

@@ -13,8 +13,8 @@ const LoginPage = ({ history }: RouteComponentProps) => {
     (state: RootState) => state.userReducer,
   );
 
-  const [username, onChangeUsername] = useInput<string>('');
-  const [password, onChangePassword] = useInput<string>('');
+  const [username, onChangeUsername] = useInput('');
+  const [password, onChangePassword] = useInput('');
 
   const [error, setError] = useState<string | Error | null>(null);
 

@@ -91,7 +91,7 @@ const Button = styled.button`
 const SearchPostList = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.userReducer);
-  const [search, onSearch] = useInput<string>('');
+  const [search, onSearch] = useInput('');
 
   let TodayOrPlaylist: string = 'Today';
 

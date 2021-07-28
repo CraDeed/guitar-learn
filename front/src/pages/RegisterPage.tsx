@@ -19,9 +19,9 @@ const RegisterPage = ({ history }: RouteComponentProps) => {
     (state: RootState) => state.userReducer,
   );
 
-  const [username, onChangeUsername] = useInput<string>('');
-  const [password, onChangePassword] = useInput<string>('');
-  const [passwordConfirm, onChangePasswordConfirm] = useInput<string>('');
+  const [username, onChangeUsername] = useInput('');
+  const [password, onChangePassword] = useInput('');
+  const [passwordConfirm, onChangePasswordConfirm] = useInput('');
   const [term, setTerm] = useState(false);
   const [termError, setTermError] = useState(false);
   const [error, setError] = useState<string | Error | null>(null);
