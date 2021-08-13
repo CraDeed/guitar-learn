@@ -23,7 +23,12 @@ router.post(
       const artist = req.query.artist as string;
       const music = req.query.music as string;
 
-      const result = spawn('python', ['back/python/craw.py', artist, music]);
+      const result = spawn('python', [
+        'back/python/craw.py',
+        artist,
+        music,
+        '4',
+      ]);
 
       let obj: PostType[] | [];
 
