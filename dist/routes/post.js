@@ -44,12 +44,17 @@ var child_process_1 = require("child_process");
 var post_1 = require("../models/post");
 var router = express_1.default.Router();
 router.get('/', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var posts, error_1;
+    var where, posts, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, post_1.Post.find()];
+                where = {};
+                if (req.query.lastId) {
+                    // 초기 로딩이 아닐 때
+                    where = { _id: { $gt: req.query.lastId } };
+                }
+                return [4 /*yield*/, post_1.Post.find(where).limit(12)];
             case 1:
                 posts = _a.sent();
                 res.status(200).send(posts);
@@ -69,7 +74,12 @@ router.post('/search', function (req, res, next) { return __awaiter(void 0, void
         try {
             artist = req.query.artist;
             music = req.query.music;
-            result = child_process_1.spawn('python', ['back/python/craw.py', artist, music]);
+            result = child_process_1.spawn('python', [
+                'back/python/craw.py',
+                artist,
+                music,
+                '4',
+            ]);
             // 3. stdout의 'data'이벤트리스너로 실행결과를 받는다.
             result.stdout.on('data', function (data) {
                 var textChunk = data.toString();

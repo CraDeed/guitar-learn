@@ -92,7 +92,7 @@ var job = node_schedule_1.scheduleJob('0 0 * * *', function () {
                 '쏜애플',
             ];
             artitst = randomArtist[Math.floor(Math.random() * randomArtist.length)];
-            result = child_process_1.spawn('python', ['back/python/craw.py', artitst, '']);
+            result = child_process_1.spawn('python', ['back/python/craw.py', artitst, '', '10']);
             // 3. stdout의 'data'이벤트리스너로 실행결과를 받는다.
             result.stdout.on('data', function (data) {
                 var _this = this;
