@@ -57,7 +57,7 @@ const job = scheduleJob('0 0 * * *', async function () {
 
   const artitst = randomArtist[Math.floor(Math.random() * randomArtist.length)];
 
-  const result = spawn('python', ['back/python/craw.py', artitst, '']);
+  const result = spawn('python', ['back/python/craw.py', artitst, '', '10']);
 
   // 3. stdout의 'data'이벤트리스너로 실행결과를 받는다.
   result.stdout.on('data', function (data: Buffer) {

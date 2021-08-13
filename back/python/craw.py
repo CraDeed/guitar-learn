@@ -7,7 +7,7 @@ import time
 from urllib import parse
 import chromedriver_autoinstaller
 
-def youtube_craw(artist="", song=""):
+def youtube_craw(artist="", song="", end = '4'):
     options = webdriver.ChromeOptions()
     options.headless = True
     options.add_argument('disable-gpu')
@@ -38,8 +38,9 @@ def youtube_craw(artist="", song=""):
     body = driver.find_element_by_tag_name('body')
     # body태그를 선택하여 body에 넣음
     
+    int(end)
 
-    for _ in range(4):
+    for _ in range(end):
         body.send_keys(Keys.END)
         # body 본문에 END키를 입력(스크롤내림)
         time.sleep(SCROLL_PAUSE_TIME)
@@ -110,4 +111,4 @@ def youtube_craw(artist="", song=""):
 
     print(json.dumps(video_list), end='')
 if __name__=='__main__':
-    youtube_craw(sys.argv[1], sys.argv[2])
+    youtube_craw(sys.argv[1], sys.argv[2],sys.argv[3])
