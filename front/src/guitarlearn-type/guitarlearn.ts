@@ -10,7 +10,7 @@ export interface PostType {
   youtuberImage: string;
 }
 
-export type PostArray = PostType[] | [];
+export type PostArray = PostType[];
 
 export interface UserType {
   _id: string;

@@ -14,13 +14,16 @@ import {
   searchPostsSuccess,
 } from '../reducers/postSlice';
 
-function loadPostsAPI(): Promise<AxiosResponse<PostArray>> {
-  return axios.get('/post');
+function loadPostsAPI(lastId: string): Promise<AxiosResponse<PostArray>> {
+  return axios.get(`/post?lastId=${lastId}`);
 }
 
-function* loadPosts() {
+function* loadPosts(action: PayloadAction<string>) {
   try {
-    const result: AxiosResponse<PostArray> = yield call(loadPostsAPI);
+    const result: AxiosResponse<PostArray> = yield call(
+      loadPostsAPI,
+      action.payload,
+    );
     yield put(loadPostsSuccess(result.data));
   } catch (error) {
     console.error(error);

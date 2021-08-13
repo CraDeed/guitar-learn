@@ -8,7 +8,12 @@ const router = express.Router();
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const posts = await Post.find();
+    let where = {};
+    if (req.query.lastId) {
+      // 초기 로딩이 아닐 때
+      where = { _id: { $gt: req.query.lastId } };
+    }
+    const posts = await Post.find(where).limit(12);
     res.status(200).send(posts);
   } catch (error) {
     console.error(error);

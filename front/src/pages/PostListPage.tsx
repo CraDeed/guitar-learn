@@ -33,13 +33,12 @@ const NoContentBlock = styled.div`
 
 const PostList = ({ history, match, location }: RouteComponentProps) => {
   const dispatch = useDispatch();
-  const { post, searchPostLoading, searchText } = useSelector(
-    (state: RootState) => state.postReducer,
-  );
+  const { post, searchPostLoading, searchText, hasMorePosts, postLoading } =
+    useSelector((state: RootState) => state.postReducer);
 
   useEffect(() => {
     if (match.path === '/') {
-      dispatch(loadPostsRequest());
+      dispatch(loadPostsRequest(''));
     }
     if (location.pathname === '/search') {
       const artist = location.search.split('=')[1].split('&')[0];
@@ -47,6 +46,27 @@ const PostList = ({ history, match, location }: RouteComponentProps) => {
       dispatch(searchPostsRequest({ artist, music }));
     }
   }, [dispatch, location.pathname, location.search, match.path]);
+
+  useEffect(() => {
+    function onScroll() {
+      if (
+        window.scrollY + document.documentElement.clientHeight >
+        document.documentElement.scrollHeight - 300
+      ) {
+        if (hasMorePosts && !postLoading) {
+          const lastId = post[post.length - 1]._id;
+          if (lastId) {
+            dispatch(loadPostsRequest(lastId));
+          }
+        }
+      }
+    }
+    window.addEventListener('scroll', onScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [dispatch, hasMorePosts, post, postLoading]);
 
   //TODO: 반응형 다시 하기
 
