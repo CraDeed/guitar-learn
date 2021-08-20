@@ -13,7 +13,7 @@ const FooterBlock = styled.footer`
 const Footer = () => {
   return (
     <FooterBlock>
-      Happy Guitar Learn{' '}
+      Happy Guitar Learn
       <SmileOutlined style={{ color: 'violet', paddingLeft: '5px' }} />
     </FooterBlock>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
@@ -10,6 +10,7 @@ import RegisterPage from './pages/RegisterPage';
 import PostPage from './pages/PostPage';
 import PlayListPage from './pages/PlayListPage';
 import PrivateRoute from './router/PrivateRoute';
+import NotFound from './pages/NotFound';
 
 const Wrapper = styled.div`
   width: 1024px;
@@ -40,16 +41,23 @@ function App() {
 
       <Border />
       <Wrapper>
-        <Route exact component={PostListPage} path={['/', '/search']} />
-        <PrivateRoute exact component={ProfilePage} path="/:username/profile" />
-        <PrivateRoute
-          exact
-          component={PlayListPage}
-          path="/:username/playlist"
-        />
-        <Route exact component={LoginPage} path="/login" />
-        <Route exact component={RegisterPage} path="/register" />
-        <Route exact component={PostPage} path="/watch" />
+        <Switch>
+          <Route exact component={PostListPage} path={['/', '/search']} />
+          <PrivateRoute
+            exact
+            component={ProfilePage}
+            path="/:username/profile"
+          />
+          <PrivateRoute
+            exact
+            component={PlayListPage}
+            path="/:username/playlist"
+          />
+          <Route exact component={LoginPage} path="/login" />
+          <Route exact component={RegisterPage} path="/register" />
+          <Route exact component={PostPage} path="/watch" />
+          <Route component={NotFound} />
+        </Switch>
         <Footer />
       </Wrapper>
     </>
